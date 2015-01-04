@@ -267,6 +267,24 @@ $custom = array(
       'trigger_table' => 'civicrm_contribution',
       'display' => 'fundraising',
 		),
+		'contribution_count_last_year' => array(
+			'label' => ts('Count of Contributions Last Year'),
+			'data_type' => 'Int',
+			'html_type' => 'Text',
+			'is_required' => '0',
+			'is_searchable' => '1',
+			'is_search_range' => '1',
+			'weight' => 47,
+			'is_active' => '1',
+			'is_view' => '1',
+			'text_length' => '32',
+            'trigger_sql' => '(SELECT COALESCE(COUNT(id),0)
+      FROM civicrm_contribution t1 WHERE CAST(receive_date AS DATE) BETWEEN "%last_fiscal_year_begin"
+      AND "%last_fiscal_year_end" AND t1.contact_id = NEW.contact_id AND
+      t1.contribution_status_id = 1 AND t1.financial_type_id IN (%financial_type_ids))',
+            'trigger_table' => 'civicrm_contribution',
+            'display' => 'fundraising',
+		),
     'contribution_average_annual_amount' => array(
 			'label' => ts('Average Annual (Calendar Year) Contribution'),
 			'data_type' => 'Money',
